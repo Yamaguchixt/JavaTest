@@ -14,7 +14,6 @@ public class DecimalToBinary {
 			int index = 0;
 			while(desimal != 0){
 				result[index++] = desimal % 2;
-				//index++;
 				desimal /=  2;
 			}
 

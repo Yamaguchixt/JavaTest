@@ -3,6 +3,8 @@ package ThreadPerMessage;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,16 +34,60 @@ class Myframe extends JFrame implements ActionListener{
 }
 
 class Service{
+	public static boolean working = false;
+	private static Thread worker = null;
+	/*
 	public static void service(){
-		System.out.println("service");
-		for(int i =0;i <50;i++){
-			System.out.print(".");
+		ThreadFactory tf = Executors.defaultThreadFactory();
+		tf.newThread(new Runnable(){public void run(){
+			doService();
+		}}).start();
+	}
+	*/
+	/*
+	 public static synchronized void service(){
+		 if(working){
+			 System.out.println("is baked.");
+			 return;
+		 }
+		working = true;
+		ThreadFactory tf = Executors.defaultThreadFactory();
+		tf.newThread(new Runnable(){public void run(){
+			doService();
+		}}).start();
+	 }
+	 */
+	public static synchronized void service(){
+		if(worker != null && worker.isAlive()){
+			worker.interrupt();
 			try{
-				Thread.sleep(100);
-			}catch (InterruptedException e){
+				worker.join();
+			}catch(InterruptedException e){
 
-			}
+			}worker = null;
 		}
-		System.out.println("done");
+		ThreadFactory tf = Executors.defaultThreadFactory();
+		worker = tf.newThread(new Runnable(){public void run(){
+			doService();
+		}});
+		worker.start();
+	}
+
+
+
+
+	public static /*synchronized*/ void doService(){
+		try{
+			System.out.println("service");
+			for(int i =0;i <50;i++){
+				System.out.print(".");
+					Thread.sleep(50);
+			}
+			System.out.println("done");
+		}catch(InterruptedException e){
+			System.out.println("cancelled");
+		}finally{
+			working = false;
+		}
 	}
 }

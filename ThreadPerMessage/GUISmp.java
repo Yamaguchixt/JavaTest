@@ -36,7 +36,7 @@ class Myframe extends JFrame implements ActionListener{
 class Service{
 	public static boolean working = false;
 	private static Thread worker = null;
-	/*
+	/* ボタンおされたらその処理を並列実行する。出力はまざる
 	public static void service(){
 		ThreadFactory tf = Executors.defaultThreadFactory();
 		tf.newThread(new Runnable(){public void run(){
@@ -44,7 +44,7 @@ class Service{
 		}}).start();
 	}
 	*/
-	/*
+	/*処理実行中にボタンおされても無視する。
 	 public static synchronized void service(){
 		 if(working){
 			 System.out.println("is baked.");
@@ -57,6 +57,7 @@ class Service{
 		}}).start();
 	 }
 	 */
+	//ボタン押されたら実行中の処理中止して新意処理開始。
 	public static synchronized void service(){
 		if(worker != null && worker.isAlive()){
 			worker.interrupt();

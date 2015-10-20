@@ -13,7 +13,7 @@ public class ClientThread extends Thread{
 			}catch(InterruptedException e){
 			}
 		}
-		Log.close();
+		//Log.close();
 		System.out.println(getName() + "END");
 	}
 }

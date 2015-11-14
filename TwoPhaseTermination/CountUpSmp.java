@@ -23,7 +23,7 @@ class CountupThread extends Thread{
 	private volatile boolean shutdownRequested = false;
 	public void shutdownRequest(){
 		shutdownRequested = true;
-		interrupt();
+		interrupt(); //threadがsleep,waitしているなら起こす
 	}
 	public boolean isShutdownRequested(){
 		return shutdownRequested;

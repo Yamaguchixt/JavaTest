@@ -23,8 +23,13 @@ public class Channel {
 			threadPool[i].start();
 		}
 	}
+	public void stopAllWorkers(){
+		for(int i=0;i<threadPool.length;i++){
+			threadPool[i].stopThread();
+		}
+	}
 
-	public synchronized void putRequest(Request request){
+	public synchronized void putRequest(Request request) throws InterruptedException {
 		while(count >= requestQueue.length){
 			try{
 				wait();
@@ -37,7 +42,7 @@ public class Channel {
 		notifyAll();
 	}
 
-	public synchronized Request takeRequest(){
+	public synchronized Request takeRequest() throws InterruptedException {
 		while(count <= 0){
 			try{
 				wait();

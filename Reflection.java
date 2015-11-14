@@ -1,18 +1,20 @@
-import java.lang.reflect.Method;
 public class Reflection {
 
 	public static void main(String[] args) {
-		Class<?> info1 = String.class;
-		System.out.println(info1.getSimpleName());
-		System.out.println(info1.getName());
-		System.out.println(info1.getPackage().getName());
+	  try {
+	    Class<StringBuilder> clazz1 = StringBuilder.class;
 
-		Class clazz = ProcessBuilder.class;
-		Method[] methods = clazz.getMethods();
-		for(Method m: methods){
-			System.out.println(m);
-		}
+	    StringBuilder sb = new StringBuilder();
+	    Class<? extends StringBuilder> clazz2 = sb.getClass();
+
+	    Class<?> clazz3 = Class.forName("java.lang.StringBuilder");
+
+	    System.out.println(System.identityHashCode(clazz1) + ", " + System.identityHashCode(clazz2) + ", " +
+	    System.identityHashCode(clazz3));
+
+	  }catch(Throwable e){
+	    e.printStackTrace();
+	  }
 
 	}
-
 }

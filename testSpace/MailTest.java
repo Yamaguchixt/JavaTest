@@ -1,3 +1,4 @@
+package testSpace;
 import java.util.Properties;
 
 import javax.mail.Message;

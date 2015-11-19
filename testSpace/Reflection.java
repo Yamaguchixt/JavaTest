@@ -1,7 +1,8 @@
+package testSpace;
 public class Reflection {
-
 	public static void main(String[] args) {
 	  try {
+	    //classが予約語なのでclazzを使う。
 	    Class<StringBuilder> clazz1 = StringBuilder.class;
 
 	    StringBuilder sb = new StringBuilder();
@@ -12,9 +13,8 @@ public class Reflection {
 	    System.out.println(System.identityHashCode(clazz1) + ", " + System.identityHashCode(clazz2) + ", " +
 	    System.identityHashCode(clazz3));
 
-	  }catch(Throwable e){
+	  }catch(ReflectiveOperationException e){
 	    e.printStackTrace();
 	  }
-
 	}
 }
